@@ -51,8 +51,6 @@ controle-financeiro-flask/
 │   ├── nova_transacao.html
 │   └── editar_transacao.html
 │
-├── static/
-│   └── style.css
 │
 └── instance/
     └── database.db
