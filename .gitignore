@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Ambiente virtual
+venv/
+.venv/
+
+# Flask
+instance/
+*.db
+
+# Variáveis de ambiente
+.env
+
+# VS Code
+.vscode/

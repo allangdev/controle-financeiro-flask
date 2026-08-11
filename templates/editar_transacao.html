@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Transação</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Meu Financeiro</h1>
+
+        <a href="/dashboard">
+            ← Voltar
+        </a>
+    </header>
+
+    <main class="container">
+
+        <div class="card">
+
+            <h2>Editar transação</h2>
+            <p>Altere os dados da sua transação.</p>
+
+            <form
+                method="POST"
+                action="{{ url_for('editar_transacao', id=transacao.id) }}"
+            >
+
+                <!-- DESCRIÇÃO -->
+                <div class="input-group">
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <input
+                        type="text"
+                        id="descricao"
+                        name="descricao"
+                        value="{{ transacao.descricao }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- VALOR -->
+                <div class="input-group">
+
+                    <label for="valor">
+                        Valor
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor"
+                        name="valor"
+                        value="{{ transacao.valor }}"
+                        step="0.01"
+                        min="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TIPO -->
+                <div class="input-group">
+
+                    <label for="tipo">
+                        Tipo
+                    </label>
+
+                    <select
+                        id="tipo"
+                        name="tipo"
+                        required
+                    >
+
+                        <option
+                            value="entrada"
+                            {% if transacao.tipo == "entrada" %}
+                                selected
+                            {% endif %}
+                        >
+                            Entrada
+                        </option>
+
+                        <option
+                            value="saida"
+                            {% if transacao.tipo == "saida" %}
+                                selected
+                            {% endif %}
+                        >
+                            Saída
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CATEGORIA -->
+                <div class="input-group">
+
+                    <label for="categoria">
+                        Categoria
+                    </label>
+
+                    <select
+                        id="categoria"
+                        name="categoria"
+                        required
+                    >
+
+                        <option value="Salário"
+                            {% if transacao.categoria == "Salário" %}selected{% endif %}>
+                            Salário
+                        </option>
+
+                        <option value="Alimentação"
+                            {% if transacao.categoria == "Alimentação" %}selected{% endif %}>
+                            Alimentação
+                        </option>
+
+                        <option value="Moradia"
+                            {% if transacao.categoria == "Moradia" %}selected{% endif %}>
+                            Moradia
+                        </option>
+
+                        <option value="Transporte"
+                            {% if transacao.categoria == "Transporte" %}selected{% endif %}>
+                            Transporte
+                        </option>
+
+                        <option value="Lazer"
+                            {% if transacao.categoria == "Lazer" %}selected{% endif %}>
+                            Lazer
+                        </option>
+
+                        <option value="Saúde"
+                            {% if transacao.categoria == "Saúde" %}selected{% endif %}>
+                            Saúde
+                        </option>
+
+                        <option value="Educação"
+                            {% if transacao.categoria == "Educação" %}selected{% endif %}>
+                            Educação
+                        </option>
+
+                        <option value="Investimentos"
+                            {% if transacao.categoria == "Investimentos" %}selected{% endif %}>
+                            Investimentos
+                        </option>
+
+                        <option value="Outros"
+                            {% if transacao.categoria == "Outros" %}selected{% endif %}>
+                            Outros
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DATA -->
+                <div class="input-group">
+
+                    <label for="data">
+                        Data
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data"
+                        name="data"
+                        value="{{ transacao.data.strftime('%Y-%m-%d') }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="btn btn-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Salvar alterações
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
